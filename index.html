@@ -222,7 +222,7 @@ function initials(name) {
 }
 
 function fmt(n) {
-  return '৳' + Math.round(n).toLocaleString('en-IN');
+  return '₹' + Math.round(n).toLocaleString('en-IN');
 }
 
 function fmtDate(d) {
@@ -426,7 +426,7 @@ function renderSummary() {
   const remaining = totalDue - totalPaid;
   document.getElementById('summaryGrid').innerHTML = `
     <div class="metric"><div class="metric-label"><i class="ti ti-users" aria-hidden="true"></i> মোট Customer</div><div class="metric-value">${customers.length} জন</div></div>
-    <div class="metric"><div class="metric-label"><i class="ti ti-currency-taka" aria-hidden="true"></i> মোট পাওনা</div><div class="metric-value">${fmt(totalDue)}</div></div>
+    <div class="metric"><div class="metric-label"><i class="ti ti-currency-rupee" aria-hidden="true"></i> মোট পাওনা</div><div class="metric-value">${fmt(totalDue)}</div></div>
     <div class="metric"><div class="metric-label"><i class="ti ti-circle-check" aria-hidden="true"></i> মোট পেয়েছি</div><div class="metric-value paid">${fmt(totalPaid)}</div></div>
     <div class="metric"><div class="metric-label"><i class="ti ti-alert-circle" aria-hidden="true"></i> এখনও বাকি</div><div class="metric-value due">${fmt(remaining)}</div></div>
   `;
