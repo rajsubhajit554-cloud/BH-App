@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Business Hisab App</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230f172a'/><text x='50' y='54' font-family='system-ui, sans-serif' font-weight='bold' font-size='44' fill='%2338bdf8' text-anchor='middle' dominant-baseline='middle'>bh</text></svg>">
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Hisab</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
@@ -116,18 +116,13 @@ body{
 .btn-action:hover:not(:disabled){background:var(--color-background-secondary);transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--color-border-secondary)}
 .btn-action:disabled{opacity:0.4;cursor:not-allowed}
 </style>
-</head>
-<body>
 
 <div class="app">
   <h2 class="sr-only" style="position:absolute;left:-9999px">ব্যবসার হিসাব - Customer Ledger App</h2>
   <div class="header">
-    <div style="display:flex;align-items:center;gap:16px">
-      <div style="width:52px;height:52px;border-radius:50%;background:#0f172a;display:flex;align-items:center;justify-content:center;color:#38bdf8;font-weight:700;font-size:24px;letter-spacing:-1px;box-shadow:0 4px 12px rgba(0,0,0,0.4);border:2px solid rgba(56,189,248,0.2)">bh</div>
-      <div>
-        <h1>ব্যবসার হিসাব</h1>
-        <p>Customer payment tracker</p>
-      </div>
+    <div>
+      <h1><i class="ti ti-report-money" aria-hidden="true" style="font-size:20px;vertical-align:-2px;margin-right:6px"></i>ব্যবসার হিসাব</h1>
+      <p>Customer payment tracker</p>
     </div>
     <div style="display:flex; gap:8px;">
       <button class="btn-action" id="btnUndo" onclick="undo()" title="Undo" disabled>
