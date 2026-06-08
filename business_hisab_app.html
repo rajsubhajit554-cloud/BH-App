@@ -1,0 +1,546 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --color-background-base: #0f172a;
+  --color-background-primary: #1e293b;
+  --color-background-secondary: #334155;
+  --color-background-tertiary: #475569;
+  --color-background-info: rgba(56, 189, 248, 0.15);
+  --color-background-danger: rgba(248, 113, 113, 0.15);
+  --color-background-success: rgba(74, 222, 128, 0.15);
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-info: #38bdf8;
+  --color-text-danger: #f87171;
+  --color-text-success: #4ade80;
+  --color-border-primary: #64748b;
+  --color-border-secondary: #475569;
+  --color-border-tertiary: rgba(255, 255, 255, 0.05);
+  --color-border-success: rgba(74, 222, 128, 0.3);
+  --border-radius-md: 10px;
+  --border-radius-lg: 20px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font-sans);
+  background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+  background-attachment: fixed;
+  color:var(--color-text-primary);
+  min-height: 100vh;
+}
+.app{padding:2.5rem 1.5rem; max-width: 1100px; margin: 0 auto;}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:12px}
+.header h1{font-size:28px;font-weight:700;color:var(--color-text-primary);letter-spacing:-0.5px;text-shadow: 0 2px 10px rgba(0,0,0,0.2)}
+.header p{font-size:15px;color:var(--color-text-secondary);margin-top:4px}
+
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:2.5rem}
+.metric{background:rgba(30, 41, 59, 0.6);backdrop-filter:blur(12px);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.75rem;box-shadow:var(--shadow-md);transition:transform 0.3s ease, box-shadow 0.3s ease}
+.metric:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.metric-label{font-size:13px;color:var(--color-text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600}
+.metric-value{font-size:32px;font-weight:700;color:var(--color-text-primary)}
+.metric-value.paid{color:var(--color-text-success)}
+.metric-value.due{color:var(--color-text-danger)}
+
+.section-card{background:rgba(30, 41, 59, 0.5);backdrop-filter:blur(16px);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:2rem;margin-bottom:2rem;box-shadow:var(--shadow-lg)}
+.section-title{font-size:18px;font-weight:600;color:var(--color-text-primary);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px}
+
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:14px;font-weight:500;color:var(--color-text-secondary)}
+.form-group input{padding:12px 16px;font-size:15px;font-family:inherit;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:rgba(15, 23, 42, 0.6);color:var(--color-text-primary);width:100%;transition:all 0.2s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.1)}
+.form-group input:focus{outline:none;border-color:var(--color-text-info);box-shadow:0 0 0 3px rgba(56, 189, 248, 0.2);background:rgba(15, 23, 42, 0.9)}
+
+.btn-add{background:linear-gradient(135deg, #3b82f6, #2563eb);border:none;border-radius:var(--border-radius-md);padding:12px 24px;font-size:15px;font-family:inherit;cursor:pointer;color:#fff;font-weight:600;display:flex;align-items:center;gap:8px;transition:all 0.3s;box-shadow:0 4px 15px rgba(37, 99, 235, 0.4)}
+.btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37, 99, 235, 0.5)}
+
+.customer-card{border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.5rem;margin-bottom:16px;background:rgba(30, 41, 59, 0.7);transition:all 0.3s ease;box-shadow:var(--shadow-sm)}
+.customer-card:hover{border-color:var(--color-border-secondary);transform:translateX(4px);box-shadow:var(--shadow-md)}
+.customer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:16px}
+.customer-name{display:flex;align-items:center;gap:16px}
+.avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg, #38bdf8, #0284c7);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(56, 189, 248, 0.4)}
+.cname{font-size:18px;font-weight:600;color:var(--color-text-primary)}
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge{font-size:13px;padding:6px 14px;border-radius:30px;font-weight:600;letter-spacing:0.3px}
+.badge-due{background:rgba(248, 113, 113, 0.15);color:var(--color-text-danger);border:1px solid rgba(248, 113, 113, 0.3)}
+.badge-paid{background:rgba(74, 222, 128, 0.15);color:var(--color-text-success);border:1px solid rgba(74, 222, 128, 0.3)}
+
+.payments-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed;margin-top:12px}
+.payments-table th{text-align:left;padding:10px 12px;color:var(--color-text-secondary);font-weight:500;border-bottom:1px solid var(--color-border-tertiary)}
+.payments-table td{padding:12px;color:var(--color-text-primary);border-bottom:1px solid var(--color-border-tertiary)}
+.payments-table tr:last-child td{border-bottom:none}
+
+.btn-del{background:rgba(248, 113, 113, 0.1);border:1px solid transparent;cursor:pointer;color:var(--color-text-danger);padding:8px;border-radius:var(--border-radius-md);font-size:15px;transition:all 0.2s}
+.btn-del:hover{background:var(--color-background-danger);border-color:rgba(248, 113, 113, 0.4);transform:scale(1.05)}
+
+.add-payment-row{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;align-items:center;background:rgba(15, 23, 42, 0.4);padding:12px;border-radius:var(--border-radius-md);border:1px dashed var(--color-border-tertiary)}
+.add-payment-row input{flex:1;min-width:130px;padding:10px 14px;font-size:14px;font-family:inherit;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:rgba(15, 23, 42, 0.7);color:var(--color-text-primary)}
+.add-payment-row input:focus{outline:none;border-color:var(--color-text-success);box-shadow:0 0 0 3px rgba(74, 222, 128, 0.2)}
+
+.btn-pay{background:linear-gradient(135deg, #22c55e, #16a34a);border:none;border-radius:var(--border-radius-md);padding:10px 20px;font-size:14px;font-family:inherit;cursor:pointer;color:#fff;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(34, 197, 94, 0.3)}
+.btn-pay:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(34, 197, 94, 0.4)}
+
+.btn-due{background:linear-gradient(135deg, #f87171, #ef4444);border:none;border-radius:var(--border-radius-md);padding:10px 20px;font-size:14px;font-family:inherit;cursor:pointer;color:#fff;font-weight:600;transition:all 0.3s;box-shadow:0 4px 12px rgba(239, 68, 68, 0.3)}
+.btn-due:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(239, 68, 68, 0.4)}
+
+.empty{text-align:center;padding:4rem 1rem;color:var(--color-text-secondary);font-size:16px;background:rgba(0,0,0,0.15);border-radius:var(--border-radius-lg);border:1px dashed var(--color-border-secondary)}
+
+.filter-row{display:flex;gap:12px;margin-bottom:1.5rem;flex-wrap:wrap}
+.filter-row input{flex:1;min-width:180px;padding:12px 16px;font-size:15px;font-family:inherit;border:1px solid var(--color-border-secondary);border-radius:30px;background:rgba(15, 23, 42, 0.6);color:var(--color-text-primary);box-shadow:inset 0 2px 4px rgba(0,0,0,0.1)}
+.filter-row input:focus{outline:none;border-color:var(--color-text-info);background:rgba(15, 23, 42, 0.9)}
+.filter-btn{padding:10px 20px;border:1px solid var(--color-border-secondary);border-radius:30px;background:rgba(15, 23, 42, 0.6);font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;color:var(--color-text-secondary);transition:all 0.3s}
+.filter-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.filter-btn.active{background:linear-gradient(135deg, #38bdf8, #0284c7);color:#fff;border:none;box-shadow:0 4px 12px rgba(56, 189, 248, 0.4)}
+
+.btn-del-cust{background:rgba(248, 113, 113, 0.1);border:1px solid transparent;cursor:pointer;color:var(--color-text-danger);font-size:15px;padding:8px 12px;border-radius:var(--border-radius-md);transition:all 0.2s}
+.btn-del-cust:hover{background:var(--color-background-danger);border-color:rgba(248, 113, 113, 0.4);transform:scale(1.05)}
+
+.toggle-pay{background:var(--color-background-secondary);border:1px solid transparent;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;color:var(--color-text-primary);padding:8px 16px;border-radius:30px;margin-top:12px;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px}
+.toggle-pay:hover{background:var(--color-background-tertiary);transform:translateY(-1px)}
+
+.pay-section{margin-top:12px}
+
+.btn-action{background:rgba(30, 41, 59, 0.8);backdrop-filter:blur(8px);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 16px;font-size:14px;font-family:inherit;cursor:pointer;color:var(--color-text-primary);font-weight:600;display:flex;align-items:center;gap:8px;transition:all 0.3s;text-decoration:none;box-shadow:var(--shadow-sm)}
+.btn-action:hover:not(:disabled){background:var(--color-background-secondary);transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--color-border-secondary)}
+.btn-action:disabled{opacity:0.4;cursor:not-allowed}
+</style>
+
+<div class="app">
+  <h2 class="sr-only" style="position:absolute;left:-9999px">ব্যবসার হিসাব - Customer Ledger App</h2>
+  <div class="header">
+    <div>
+      <h1><i class="ti ti-report-money" aria-hidden="true" style="font-size:20px;vertical-align:-2px;margin-right:6px"></i>ব্যবসার হিসাব</h1>
+      <p>Customer payment tracker</p>
+    </div>
+    <div style="display:flex; gap:8px;">
+      <button class="btn-action" id="btnUndo" onclick="undo()" title="Undo" disabled>
+        <i class="ti ti-arrow-back-up" aria-hidden="true"></i> Undo
+      </button>
+      <button class="btn-action" id="btnRedo" onclick="redo()" title="Redo" disabled>
+        <i class="ti ti-arrow-forward-up" aria-hidden="true"></i> Redo
+      </button>
+      <button class="btn-action" onclick="exportData()" title="Backup Data">
+        <i class="ti ti-device-floppy" aria-hidden="true"></i> Save
+      </button>
+      <button class="btn-action" onclick="importDataFile()" title="Restore Data">
+        <i class="ti ti-upload" aria-hidden="true"></i> Upload
+      </button>
+    </div>
+  </div>
+
+  <div class="summary-grid" id="summaryGrid"></div>
+
+  <div class="section-card">
+    <div class="section-title"><i class="ti ti-user-plus" aria-hidden="true" style="font-size:18px"></i>নতুন Customer যোগ করুন</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Customer নাম</label>
+        <input type="text" id="newName" placeholder="যেমন: রহিম সাহেব" />
+      </div>
+      <div class="form-group">
+        <label>মোট বাকি পাওনা (টাকা)</label>
+        <input type="number" id="newDue" placeholder="যেমন: 5000" min="0" />
+      </div>
+    </div>
+    <button class="btn-add" onclick="addCustomer()">
+      <i class="ti ti-plus" aria-hidden="true"></i> যোগ করুন
+    </button>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title"><i class="ti ti-users" aria-hidden="true" style="font-size:18px"></i>Customer তালিকা</div>
+    <div class="filter-row">
+      <input type="text" id="searchBox" placeholder="নাম খুঁজুন..." oninput="renderCustomers()" />
+      <button class="filter-btn active" id="fAll" onclick="setFilter('all')">সবাই</button>
+      <button class="filter-btn" id="fDue" onclick="setFilter('due')">বাকি আছে</button>
+      <button class="filter-btn" id="fClear" onclick="setFilter('clear')">মিটে গেছে</button>
+    </div>
+    <div id="customerList"></div>
+  </div>
+</div>
+
+<script>
+let customers = JSON.parse(localStorage.getItem('hisab_customers') || '[]');
+let filter = 'all';
+let expandedPayments = {};
+let expandedDues = {};
+let currentFileHandle = null;
+let undoStack = [];
+let redoStack = [];
+const MAX_HISTORY = 50;
+
+function recordState() {
+  undoStack.push(JSON.stringify(customers));
+  if (undoStack.length > MAX_HISTORY) undoStack.shift();
+  redoStack = [];
+  updateUndoRedoButtons();
+}
+
+function undo() {
+  if (undoStack.length === 0) return;
+  redoStack.push(JSON.stringify(customers));
+  customers = JSON.parse(undoStack.pop());
+  save();
+  renderAll();
+  updateUndoRedoButtons();
+}
+
+function redo() {
+  if (redoStack.length === 0) return;
+  undoStack.push(JSON.stringify(customers));
+  customers = JSON.parse(redoStack.pop());
+  save();
+  renderAll();
+  updateUndoRedoButtons();
+}
+
+function updateUndoRedoButtons() {
+  const undoBtn = document.getElementById('btnUndo');
+  const redoBtn = document.getElementById('btnRedo');
+  if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+  if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+}
+
+function save() {
+  try { localStorage.setItem('hisab_customers', JSON.stringify(customers)); } catch(e){}
+}
+
+function initials(name) {
+  return name.trim().split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2) || 'CU';
+}
+
+function fmt(n) {
+  return '৳' + Math.round(n).toLocaleString('en-IN');
+}
+
+function fmtDate(d) {
+  if(!d) return '-';
+  const dt = new Date(d);
+  return dt.toLocaleDateString('bn-BD', {day:'2-digit',month:'short',year:'numeric'});
+}
+
+function setFilter(f) {
+  filter = f;
+  ['fAll','fDue','fClear'].forEach(id => document.getElementById(id).classList.remove('active'));
+  document.getElementById(f==='all'?'fAll':f==='due'?'fDue':'fClear').classList.add('active');
+  renderCustomers();
+}
+
+function addCustomer() {
+  const name = document.getElementById('newName').value.trim();
+  const due = parseFloat(document.getElementById('newDue').value) || 0;
+  if(!name) { alert('Customer নাম দিন'); return; }
+  recordState();
+  const id = Date.now();
+  const dues = due > 0 ? [{ id: id + 1, amount: due, date: new Date().toISOString().split('T')[0] }] : [];
+  customers.push({ id, name, totalDue: due, dues, payments: [] });
+  document.getElementById('newName').value='';
+  document.getElementById('newDue').value='';
+  save();
+  renderAll();
+}
+
+function deleteCustomer(id) {
+  if(!confirm('এই customer মুছে ফেলবেন?')) return;
+  recordState();
+  customers = customers.filter(c=>c.id!==id);
+  save();
+  renderAll();
+}
+
+function addPayment(id) {
+  const c = customers.find(c=>c.id===id);
+  const amtEl = document.getElementById('payAmt_'+id);
+  const dateEl = document.getElementById('payDate_'+id);
+  const amt = parseFloat(amtEl.value);
+  if(!amt || amt<=0) { alert('পরিমাণ দিন'); return; }
+  const totalPaid = c.payments.reduce((s,p)=>s+p.amount,0);
+  if(amt > (c.totalDue - totalPaid)) { alert('বাকির চেয়ে বেশি দেওয়া যাবে না'); return; }
+  recordState();
+  c.payments.push({ id: Date.now(), amount: amt, date: dateEl.value || new Date().toISOString().split('T')[0] });
+  amtEl.value='';
+  dateEl.value='';
+  expandedPayments[id] = true;
+  save();
+  renderAll();
+}
+
+function deletePayment(cid, pid) {
+  recordState();
+  const c = customers.find(c=>c.id===cid);
+  c.payments = c.payments.filter(p=>p.id!==pid);
+  save();
+  renderAll();
+}
+
+function togglePayments(id) {
+  expandedPayments[id] = !expandedPayments[id];
+  renderCustomers();
+}
+
+function toggleDues(id) {
+  expandedDues[id] = !expandedDues[id];
+  renderCustomers();
+}
+
+function addDue(id) {
+  const c = customers.find(c=>c.id===id);
+  const amtEl = document.getElementById('dueAmt_'+id);
+  const dateEl = document.getElementById('dueDate_'+id);
+  const amt = parseFloat(amtEl.value);
+  if(!amt || amt<=0) { alert('পরিমাণ দিন'); return; }
+  recordState();
+  if (!c.dues) c.dues = c.totalDue > 0 ? [{ id: c.id, amount: c.totalDue, date: new Date(c.id).toISOString().split('T')[0] }] : [];
+  c.dues.push({ id: Date.now(), amount: amt, date: dateEl.value || new Date().toISOString().split('T')[0] });
+  c.totalDue += amt;
+  amtEl.value='';
+  dateEl.value='';
+  expandedDues[id] = true;
+  save();
+  renderAll();
+}
+
+function deleteDue(cid, did) {
+  if(!confirm('এই বাকি মুছে ফেলবেন?')) return;
+  recordState();
+  const c = customers.find(c=>c.id===cid);
+  const d = c.dues.find(d=>d.id===did);
+  if (d) c.totalDue -= d.amount;
+  c.dues = c.dues.filter(d=>d.id!==did);
+  save();
+  renderAll();
+}
+
+async function exportData() {
+  const jsonStr = JSON.stringify(customers, null, 2);
+  
+  try {
+    if (window.showSaveFilePicker) {
+      if (!currentFileHandle) {
+        const now = new Date();
+        const dateStr = now.toISOString().split('T')[0];
+        const timeStr = now.toTimeString().split(' ')[0].replace(/:/g, '-');
+        const fileName = `hisab_backup_${dateStr}_${timeStr}.json`;
+        
+        currentFileHandle = await window.showSaveFilePicker({
+          suggestedName: fileName,
+          types: [{
+            description: 'JSON Backup File',
+            accept: {'application/json': ['.json']},
+          }],
+        });
+      }
+      const writable = await currentFileHandle.createWritable();
+      await writable.write(jsonStr);
+      await writable.close();
+      alert('ফাইলটি সফলভাবে সেভ হয়েছে!');
+    } else {
+      const now = new Date();
+      const dateStr = now.toISOString().split('T')[0];
+      const timeStr = now.toTimeString().split(' ')[0].replace(/:/g, '-');
+      const fileName = `hisab_backup_${dateStr}_${timeStr}.json`;
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(jsonStr);
+      const downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", fileName);
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+    }
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      console.error(err);
+      alert('ফাইল সেভ করতে সমস্যা হয়েছে!');
+    }
+  }
+}
+
+async function importDataFile() {
+  try {
+    if (window.showOpenFilePicker) {
+      const [handle] = await window.showOpenFilePicker({
+        types: [{
+          description: 'JSON Backup File',
+          accept: {'application/json': ['.json']},
+        }],
+      });
+      const file = await handle.getFile();
+      const text = await file.text();
+      processImportedText(text, handle);
+    } else {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => processImportedText(ev.target.result, null);
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      console.error(err);
+      alert('ফাইল খুলতে সমস্যা হয়েছে!');
+    }
+  }
+}
+
+function processImportedText(text, handle) {
+  try {
+    const importedData = JSON.parse(text);
+    if (Array.isArray(importedData)) {
+      if (confirm('বর্তমান ডাটা মুছে গিয়ে ব্যাকআপ ডাটা রিস্টোর হবে। আপনি কি নিশ্চিত?')) {
+        recordState();
+        customers = importedData;
+        save();
+        renderAll();
+        if (handle) currentFileHandle = handle;
+        alert('ডাটা সফলভাবে রিস্টোর হয়েছে!');
+      }
+    } else {
+      alert('ভুল ফাইল ফরম্যাট!');
+    }
+  } catch (err) {
+    alert('ফাইল পড়তে সমস্যা হয়েছে!');
+  }
+}
+
+function renderSummary() {
+  const totalDue = customers.reduce((s,c)=>s+c.totalDue,0);
+  const totalPaid = customers.reduce((s,c)=>s+c.payments.reduce((a,p)=>a+p.amount,0),0);
+  const remaining = totalDue - totalPaid;
+  document.getElementById('summaryGrid').innerHTML = `
+    <div class="metric"><div class="metric-label"><i class="ti ti-users" aria-hidden="true"></i> মোট Customer</div><div class="metric-value">${customers.length} জন</div></div>
+    <div class="metric"><div class="metric-label"><i class="ti ti-currency-taka" aria-hidden="true"></i> মোট পাওনা</div><div class="metric-value">${fmt(totalDue)}</div></div>
+    <div class="metric"><div class="metric-label"><i class="ti ti-circle-check" aria-hidden="true"></i> মোট পেয়েছি</div><div class="metric-value paid">${fmt(totalPaid)}</div></div>
+    <div class="metric"><div class="metric-label"><i class="ti ti-alert-circle" aria-hidden="true"></i> এখনও বাকি</div><div class="metric-value due">${fmt(remaining)}</div></div>
+  `;
+}
+
+function renderCustomers() {
+  const search = (document.getElementById('searchBox').value||'').toLowerCase();
+  let list = customers.filter(c => c.name.toLowerCase().includes(search));
+  if(filter==='due') list = list.filter(c => {
+    const paid = c.payments.reduce((s,p)=>s+p.amount,0);
+    return paid < c.totalDue;
+  });
+  if(filter==='clear') list = list.filter(c => {
+    const paid = c.payments.reduce((s,p)=>s+p.amount,0);
+    return paid >= c.totalDue;
+  });
+
+  if(list.length===0) {
+    document.getElementById('customerList').innerHTML = `<div class="empty"><i class="ti ti-mood-empty" style="font-size:32px;display:block;margin-bottom:8px"></i>কোনো customer নেই</div>`;
+    return;
+  }
+
+  document.getElementById('customerList').innerHTML = list.map(c => {
+    if (!c.dues) c.dues = c.totalDue > 0 ? [{ id: c.id, amount: c.totalDue, date: new Date(c.id).toISOString().split('T')[0] }] : [];
+    const totalPaid = c.payments.reduce((s,p)=>s+p.amount,0);
+    const remaining = c.totalDue - totalPaid;
+    const isDone = remaining <= 0;
+    const showPay = expandedPayments[c.id];
+    const showDue = expandedDues[c.id];
+    
+    const payRows = c.payments.length ? c.payments.map(p=>`
+      <tr>
+        <td>${fmtDate(p.date)}</td>
+        <td style="color:var(--color-text-success);font-weight:600">${fmt(p.amount)}</td>
+        <td><button class="btn-del" onclick="deletePayment(${c.id},${p.id})" title="মুছুন"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+      </tr>`).join('') : '<tr><td colspan="3" style="color:var(--color-text-secondary);padding:8px">কোনো payment নেই</td></tr>';
+      
+    const dueRows = c.dues.length ? c.dues.map(d=>`
+      <tr>
+        <td>${fmtDate(d.date)}</td>
+        <td style="color:var(--color-text-danger);font-weight:600">${fmt(d.amount)}</td>
+        <td><button class="btn-del" onclick="deleteDue(${c.id},${d.id})" title="মুছুন"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+      </tr>`).join('') : '<tr><td colspan="3" style="color:var(--color-text-secondary);padding:8px">কোনো বাকি নেই</td></tr>';
+
+    return `
+    <div class="customer-card">
+      <div class="customer-header">
+        <div class="customer-name">
+          <div class="avatar">${initials(c.name)}</div>
+          <div>
+            <div class="cname">${c.name}</div>
+            <div style="font-size:13px;color:var(--color-text-secondary);margin-top:4px">মোট বাকি: <strong style="color:var(--color-text-primary)">${fmt(c.totalDue)}</strong></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="badges">
+            <span class="badge badge-paid"><i class="ti ti-check" aria-hidden="true"></i> পেয়েছি: ${fmt(totalPaid)}</span>
+            ${isDone ? '<span class="badge badge-paid">✓ মিটে গেছে</span>' : `<span class="badge badge-due">পাওনা: ${fmt(remaining)}</span>`}
+          </div>
+          <button class="btn-del-cust" onclick="deleteCustomer(${c.id})" title="মুছুন"><i class="ti ti-trash" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--color-border-tertiary);padding-top:16px;margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+        <div>
+          <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:8px;font-weight:500"><i class="ti ti-plus" aria-hidden="true"></i> নতুন বাকি যোগ করুন</div>
+          <div class="add-payment-row" style="margin-top:0">
+            <input type="number" id="dueAmt_${c.id}" placeholder="টাকার পরিমাণ" min="1" />
+            <input type="date" id="dueDate_${c.id}" value="${new Date().toISOString().split('T')[0]}" />
+            <button class="btn-due" onclick="addDue(${c.id})">যোগ</button>
+          </div>
+        </div>
+        ${!isDone ? `
+        <div>
+          <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:8px;font-weight:500"><i class="ti ti-cash" aria-hidden="true"></i> নতুন payment নিন</div>
+          <div class="add-payment-row" style="margin-top:0">
+            <input type="number" id="payAmt_${c.id}" placeholder="টাকার পরিমাণ" min="1" max="${remaining}" />
+            <input type="date" id="payDate_${c.id}" value="${new Date().toISOString().split('T')[0]}" />
+            <button class="btn-pay" onclick="addPayment(${c.id})">যোগ</button>
+          </div>
+        </div>` : '<div></div>'}
+      </div>
+
+      <div class="pay-section" style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+        <button class="toggle-pay" onclick="toggleDues(${c.id})">
+          <i class="ti ti-chevron-${showDue?'up':'down'}" aria-hidden="true"></i>
+          ${showDue ? 'বাকি ইতিহাস লুকান' : `বাকি ইতিহাস (${c.dues.length}টি)`}
+        </button>
+        <button class="toggle-pay" onclick="togglePayments(${c.id})">
+          <i class="ti ti-chevron-${showPay?'up':'down'}" aria-hidden="true"></i>
+          ${showPay ? 'Payment ইতিহাস লুকান' : `Payment ইতিহাস (${c.payments.length}টি)`}
+        </button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+        ${showDue ? `
+        <div style="margin-top:12px;background:rgba(15, 23, 42, 0.4);border-radius:var(--border-radius-md);padding:12px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--color-text-danger);text-transform:uppercase;letter-spacing:0.5px">বাকি ইতিহাস</div>
+          <table class="payments-table">
+            <thead><tr><th>তারিখ</th><th>টাকা</th><th></th></tr></thead>
+            <tbody>${dueRows}</tbody>
+          </table>
+        </div>` : ''}
+        ${showPay ? `
+        <div style="margin-top:12px;background:rgba(15, 23, 42, 0.4);border-radius:var(--border-radius-md);padding:12px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--color-text-success);text-transform:uppercase;letter-spacing:0.5px">Payment ইতিহাস</div>
+          <table class="payments-table">
+            <thead><tr><th>তারিখ</th><th>টাকা</th><th></th></tr></thead>
+            <tbody>${payRows}</tbody>
+          </table>
+        </div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderAll() {
+  renderSummary();
+  renderCustomers();
+}
+
+renderAll();
+</script>
